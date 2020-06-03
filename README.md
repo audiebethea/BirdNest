@@ -1,0 +1,1 @@
+BirdNest is a quick NestJS API to acquaint myself with NestJS and TypeORM.
