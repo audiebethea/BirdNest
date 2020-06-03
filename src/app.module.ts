@@ -1,10 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { RoostHttpModule } from './roost/roost-http.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    RoostHttpModule,
+    DatabaseModule,
+    //automatically parses our .env file, can be accessed using 'GET' with ConfigService
+    ConfigModule.forRoot()
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
