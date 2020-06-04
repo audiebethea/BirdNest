@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoostEntity } from './roost.entity';
 import { CreateEgg } from './dtos/create-egg.dto';
+import { roostData } from './__mocks__/roost.data';
 
 @Injectable()
 export class RoostService {
@@ -16,11 +17,11 @@ export class RoostService {
     }
 
     findAllBirds(): Promise<RoostEntity[]>{
-        return this.roostRepository.find({hatched: true});
+        return this.roostRepository.find({hatched: 'true'});
     }
 
     findAllEggs(): Promise<RoostEntity[]>{
-        return this.roostRepository.find({hatched: false});
+        return this.roostRepository.find({hatched: 'false'});
     }
 
     findOneById(id: string): Promise<RoostEntity>{
@@ -28,12 +29,12 @@ export class RoostService {
     }
 
     async createEgg(createEgg: CreateEgg): Promise<RoostEntity>{
-        const newEgg = await this.roostRepository.insert(createEgg);
+        const newEgg = await this.roostRepository.save(createEgg);
         return newEgg;
     }
 
     async createBulkEggs(createBulkEggs: CreateEgg[]): Promise<RoostEntity[]>{
-        const newEggs = await this.roostRepository.insert(createBulkEggs);
+        const newEggs = await this.roostRepository.save(createBulkEggs);
         return newEggs;
     }
 
@@ -46,3 +47,18 @@ export class RoostService {
         return await this.roostRepository.delete(id);
     }
 }
+
+export class RoostServiceMock {
+    findAllInhabitants() {
+      return roostData;
+    }
+    findOneById(id: string){
+      return roostData.find((inhab) => inhab.id === id)
+    }
+   findAllBirds(){
+        return roostData.find((inhab) => inhab.hatched === 'true')
+    } 
+    findAllEggs(){
+        return roostData.find((inhab) => inhab.hatched === 'false')
+    }
+   }
