@@ -73,8 +73,8 @@ export class RoostController{
     @Put(":id")
     async hatchEgg(@Body() hatchEgg: CreateEgg, @Param() id: string): Promise<object> {
         //check to make sure this bird has not been hatched before
-        const existingEgg = this.roostService.findOneById(id);
-        if(existingEgg.hatched === false){
+        const existingEgg = await this.roostService.findOneById(id);
+        if(existingEgg.hatched === 'false'){
             return;
         }
 
